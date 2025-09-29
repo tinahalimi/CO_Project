@@ -1,44 +1,35 @@
 # Enhancing Decision Trees with Genetic Algorithms
 
-This repository contains the implementation for a Convex Optimization II project exploring how genetic algorithms can improve the performance of single, interpretable decision trees. The work targets the common trade-off between accuracy and interpretability: while ensembles (e.g., Random Forests, Gradient Boosting) often achieve higher accuracy, a single decision tree remains preferable in regulated or high-stakes settings where transparent decision rules are required. By combining bootstrapping, mutation, and crossover operations within a genetic search, this project evolves decision trees toward higher accuracy without abandoning their inherent interpretability.
+This repository contains the implementation and analysis for a project in *Convex Optimization II* at Sharif University of Technology. The project investigates how genetic algorithms can improve the performance of single decision trees, balancing the trade-off between predictive accuracy and interpretability. While ensemble methods such as Random Forests and Gradient Boosting often outperform individual trees, they lack transparency. This work demonstrates how evolutionary strategies can enhance accuracy while preserving the interpretability of a single tree model.
+
+---
 
 ## Project Overview
 
-Traditional decision tree training relies on greedy, node-by-node optimization, which can lead to suboptimal global structures. This project reframes tree induction as a global search problem. We first generate an initial population of shallow trees via bootstrap samples, then iteratively apply genetic operators to refine structure and thresholds. Candidate trees are evaluated using a fitness function (classification performance on validation folds), and survivor selection with simple elitism retains strong candidates across generations. The resulting approach maintains a single, human-readable tree while narrowing the performance gap with black-box or ensemble models.
+Conventional decision tree algorithms rely on greedy, node-by-node optimization, which frequently leads to locally optimal but globally suboptimal trees. To address this limitation, we reformulate tree induction as a global search problem guided by evolutionary principles.  
 
-## Method
+The approach begins with an initial population of shallow trees generated via bootstrap sampling. Genetic operators, including **mutation** (threshold perturbation) and **crossover** (subtree recombination), are applied iteratively to evolve candidate trees. Fitness evaluation is based on classification performance, and elitist survivor selection ensures that strong candidates persist across generations. The final output is a single, interpretable decision tree with improved generalization compared to its greedy counterpart.
 
-The codebase implements two core components:
+---
 
-- **InternalDecisionTree**: a lightweight, array-based representation of a decision tree (features, thresholds, child pointers, and leaf predictions). This enables efficient copying, mutation of thresholds, subtree composition, and prediction.  
-- **GeneticDecisionTree**: a wrapper that (1) builds an initial population of trees on bootstrap samples, (2) applies mutation (threshold perturbations) and crossover (subtree recombination around compatible roots), (3) scores candidates, and (4) selects the best tree over several iterations. Hyperparameters include maximum depth, number of evolutionary steps, and random seeds for reproducibility.
+## Repository Contents
 
-A small test harness demonstrates the approach on a standard tabular dataset, comparing a depth-constrained baseline decision tree against the genetically optimized counterpart.
+- `Implementation.ipynb`: Jupyter Notebook implementing the genetic decision tree framework and experiments.  
+- `Report.pdf`: Detailed project report including background, methodology, and results.  
+- `Presentation.pdf`: Project presentation slides.  
 
-## Repository Structure
+---
 
-- `src/`  
-  - `internal_decision_tree.py`: Array-based tree structure, copying utilities, counting/leaf labeling, and prediction routines.  
-  - `genetic_decision_tree.py`: Genetic search loop (population init, fitness evaluation, mutation, crossover, selection).  
-- `notebooks/`  
-  - `demo.ipynb`: End-to-end demonstration on a benchmark dataset with visualizations.  
-- `Report.pdf`: Full project report with background, theory, implementation details, and experiments.  
-- `.gitignore`: Ignore rules for local artifacts.
+## Key Contributions
 
-> Note: Filenames may differ from the above; align with your repository’s organization if needed.
+- Reformulated decision tree learning as a **global optimization problem** using evolutionary search.  
+- Developed a lightweight internal tree representation enabling efficient mutation, crossover, and evaluation.  
+- Demonstrated how **bootstrapping, mutation, and subtree crossover** can improve tree accuracy without compromising interpretability.  
+- Highlighted the practical value of shallow, transparent trees in scenarios where model transparency is critical.  
 
-## Usage at a Glance
+---
 
-1. Install Python dependencies (e.g., `scikit-learn`, `numpy`, `pandas`, `matplotlib`).  
-2. Run the demo notebook in `notebooks/` to train a baseline decision tree and a genetic decision tree and compare performance.  
-3. Inspect the final tree structure and thresholds to verify interpretability.
+## Authors
 
-## Key Ideas and Design Choices
-
-- **Global Search vs. Greedy Splits**: Genetic operators explore multiple tree configurations beyond local, greedy choices.  
-- **Bootstrapped Starts**: Initial diversity is created by training shallow trees on bootstrap resamples.  
-- **Mutation (Threshold Tweaks)**: Small changes to node thresholds can yield meaningful downstream structure changes with minimal complexity cost.  
-- **Crossover (Subtree Recombination)**: When compatible, subtrees from strong parents are combined to transfer complementary strengths.  
-- **Shallow, Interpretable Trees**: Depth is constrained (e.g., depth 2–5) to preserve readability.
-
-
+- **Tina Halimi**  
+- **Heliya Shakeri**  
